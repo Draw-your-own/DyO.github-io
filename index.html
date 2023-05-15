@@ -1,0 +1,44 @@
+<head>
+    <meta charset="UFT-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="XA-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dibujo</title>
+</head>
+
+<body>
+    <div class="container">
+        <section id="toolbar">
+            <h1>Draw Your Own</h1>
+            <div class="row">
+                <label class="title">Options</label>
+                <ul class="options">
+                    <li class="option" id="brush">
+                        <span>Brush</span>
+                    </li>
+                    <input id="bs-slider" name='bs' type="range">
+                    <li class="option" id="eraser">
+                        <span>Eraser</span>
+                    </li>
+                    <input id="er-slider" name='es' type="range">
+                </ul>
+            </div>
+            <div class="row">
+                <label class="title">Color</label>
+                <input id="col" name='col' type="color">
+            </div>
+            <div class="row buttons">
+                <button class="clear-canvas">Clear All</button>
+                <button class="save-image">Save as Image</button>
+            </div>
+        </section>
+    
+    <section class="drawing-board">
+        <canvas id="drawing-board">Drawing board</canvas>
+    </section>
+</div>
+    
+    <script src="./index.js"></script>
+</body>
+
+</html>

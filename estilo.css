@@ -91,6 +91,10 @@ padding-left: 10px;
     color:#e2d573
     
 }
+.save-image:hover{
+    color: #fff;
+    background: #6C757D;
+  }
 .clear-canvas:hover{
     color: #fff;
     background: #6C757D;

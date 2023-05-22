@@ -74,17 +74,16 @@ padding-left: 10px;
   }
 .buttons button {
     width: 70%;
-    height: 25px;
+    height: 40px;
     color: white;
     border: 1px;
     border-radius: 4px;
-    margin-top: 10px;
     margin-bottom: 30px;
     outline: none;
     background:#e2d573;
     cursor:pointer;
-    left:50%;
-    right:50%;
+   padding-left: 50%;
+  padding-right: 50%;
 }
 .buttons.save-image{
     border:1px solid  #3375c0;

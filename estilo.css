@@ -83,6 +83,8 @@ padding-left: 10px;
     outline: none;
     background:#e2d573;
     cursor:pointer;
+    left:50%;
+    right:50%;
 }
 .buttons.save-image{
     border:1px solid  #3375c0;

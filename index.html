@@ -36,59 +36,10 @@
             </div>
         </section>
         <section class="drawing-board">
-            <canvas id="drawing-board">Drawing board</canvas>
+            <canvas id="drawing-board"></canvas>
         </section>
     </div>
     <script src="index.js"></script>
-    <script>
-        const canvas = document.querySelector("#drawing-board");
-        const ctx = canvas.getContext("2d");
-
-        // Establecer el tamaño del lienzo de dibujo
-        canvas.width = 300;
-        canvas.height = 300;
-
-        let isDrawing = false;
-        let selectedTool = "brush";
-        let brushWidth = 5;
-        let eraserWidth = 5;
-        let selectedColor = "#000";
-
-        canvas.addEventListener("mousedown", startDraw);
-        canvas.addEventListener("mousemove", drawing);
-        canvas.addEventListener("mouseup", stopDraw);
-        canvas.addEventListener("mouseout", stopDraw);
-
-        function startDraw(e) {
-            isDrawing = true;
-            ctx.beginPath();
-            ctx.moveTo(e.offsetX, e.offsetY);
-        }
-
-        function drawing(e) {
-            if (!isDrawing) return;
-            let x = e.offsetX;
-            let y = e.offsetY;
-
-            if (selectedTool === "brush" || selectedTool === "eraser") {
-                ctx.lineWidth = selectedTool === "eraser" ? eraserWidth : brushWidth;
-                ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
-
-                ctx.lineTo(x, y);
-                ctx.stroke();
-            }
-        }
-
-        function stopDraw() {
-            isDrawing = false;
-        }
-
-        // Restablecer el tamaño del lienzo de dibujo cuando cambie el tamaño de la ventana
-        window.addEventListener("resize", () => {
-            canvas.width = 300;
-            canvas.height = 300;
-        });
-    </script>
 </body>
 
 </html>

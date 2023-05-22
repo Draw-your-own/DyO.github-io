@@ -1,11 +1,11 @@
 const canvas = document.querySelector("canvas"),
 toolBtns = document.querySelectorAll(".tool"),
-fillColor = document.querySelector("#fill-color"),
-sizeSlider = document.querySelector("#size-slider"),
-colorBtns = document.querySelectorAll(".colors .option"),
-colorPicker = document.querySelector("#color-picker"),
+sizeESlider = document.querySelector("#es-slider"),
+sizeBSlider = document.querySelector("#bs-slider"),
+colorBtns = document.querySelectorAll(".colors"),
+colorPicker = document.querySelector("#col"),
 clearCanvas = document.querySelector(".clear-canvas"),
-saveImg = document.querySelector(".save-img"),
+saveImg = document.querySelector(".save-image"),
 ctx = canvas.getContext("2d");
 
 // global variables with default value

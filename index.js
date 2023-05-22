@@ -1,6 +1,7 @@
 const canvas = document.querySelector("canvas"),
 toolBtns = document.querySelectorAll(".tool"),
-sizeSlider = document.querySelector(".slider"),
+sizeESlider = document.querySelector("#bs-slider"),
+sizeBSlider = document.querySelector("#es-slider"),
 colorBtns = document.querySelectorAll(".colors"),
 colorPicker = document.querySelector("#col"),
 clearCanvas = document.querySelector(".clear-canvas"),
@@ -12,6 +13,7 @@ let prevMouseX, prevMouseY, snapshot,
 isDrawing = false,
 selectedTool = "brush",
 brushWidth = 5,
+eraserWidth = 5,
 selectedColor = "#000";
 
 const setCanvasBackground = () => {
@@ -62,17 +64,8 @@ toolBtns.forEach(btn => {
     });
 });
 
-sizeSlider.addEventListener("change", () => brushWidth = sizeSlider.value); // passing slider value as brushSize
-
-colorBtns.forEach(btn => {
-    btn.addEventListener("click", () => { // adding click event to all color button
-        // removing selected class from the previous option and adding on current clicked option
-        document.querySelector(".options .selected").classList.remove("selected");
-        btn.classList.add("selected");
-        // passing selected btn background color as selectedColor value
-        selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
-    });
-});
+sizeESlider.addEventListener("change", () => eraserWidth = sizeESlider.value);
+sizeBSlider.addEventListener("change", () => brushWidth = sizeBSlider.value);// passing slider value as brushSize
 
 colorPicker.addEventListener("change", () => {
     // passing picked color value from color picker to last color btn background

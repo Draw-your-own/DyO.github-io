@@ -1,10 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="UFT-8">
-    <html lang="en">
-    <link rel="stylesheet" href="estilo.css">
-    <meta http-equiv="XA-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dibujo</title>
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>
@@ -17,29 +19,76 @@
                     <li class="option active tool" id="brush">
                         <span>Brush</span>
                     </li>
-                    <input id="bs-slider" name='bs' type="range">
+                    <input id="bs-slider" name="bs" type="range">
                     <li class="option tool" id="eraser">
                         <span>Eraser</span>
                     </li>
-                    <input id="er-slider" name='es' type="range">
+                    <input id="er-slider" name="es" type="range">
                 </ul>
             </div>
             <div class="row">
                 <label class="title">Color</label>
-                <input id="col" name='col' type="color">
+                <input id="col" name="col" type="color">
             </div>
             <div class="row buttons">
                 <button class="clear-canvas">Clear All</button>
                 <button class="save-image">Save as Image</button>
             </div>
         </section>
-    
-    <section class="drawing-board">
-        <canvas id="drawing-board">Drawing board</canvas>
-    </section>
-</div>
-    
+        <section class="drawing-board">
+            <canvas id="drawing-board">Drawing board</canvas>
+        </section>
+    </div>
     <script src="index.js"></script>
+    <script>
+        const canvas = document.querySelector("#drawing-board");
+        const ctx = canvas.getContext("2d");
+
+        // Establecer el tamaño del lienzo de dibujo
+        canvas.width = 300;
+        canvas.height = 300;
+
+        let isDrawing = false;
+        let selectedTool = "brush";
+        let brushWidth = 5;
+        let eraserWidth = 5;
+        let selectedColor = "#000";
+
+        canvas.addEventListener("mousedown", startDraw);
+        canvas.addEventListener("mousemove", drawing);
+        canvas.addEventListener("mouseup", stopDraw);
+        canvas.addEventListener("mouseout", stopDraw);
+
+        function startDraw(e) {
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        }
+
+        function drawing(e) {
+            if (!isDrawing) return;
+            let x = e.offsetX;
+            let y = e.offsetY;
+
+            if (selectedTool === "brush" || selectedTool === "eraser") {
+                ctx.lineWidth = selectedTool === "eraser" ? eraserWidth : brushWidth;
+                ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+        }
+
+        function stopDraw() {
+            isDrawing = false;
+        }
+
+        // Restablecer el tamaño del lienzo de dibujo cuando cambie el tamaño de la ventana
+        window.addEventListener("resize", () => {
+            canvas.width = 300;
+            canvas.height = 300;
+        });
+    </script>
 </body>
 
 </html>

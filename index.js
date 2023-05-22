@@ -7,14 +7,16 @@ let brushWidth = 5;
 let eraserWidth = 5;
 let selectedColor = "#000";
 
-canvas.addEventListener("mousedown", startDraw);
-canvas.addEventListener("mousemove", drawing);
-canvas.addEventListener("mouseup", stopDraw);
-canvas.addEventListener("mouseout", stopDraw);
+document.addEventListener("mousedown", startDraw);
+document.addEventListener("mousemove", drawing);
+document.addEventListener("mouseup", stopDraw);
+document.addEventListener("mouseout", stopDraw);
 
 function startDraw(e) {
-    isDrawing = true;
-    draw(e);
+    if (e.target === canvas) {
+        isDrawing = true;
+        draw(e);
+    }
 }
 
 function drawing(e) {
@@ -31,23 +33,63 @@ function draw(e) {
         ctx.lineWidth = selectedTool === "eraser" ? eraserWidth : brushWidth;
         ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
 
-        ctx.lineTo(x, y);
-        ctx.stroke();
+        if (isDrawing) {
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
     }
 }
 
 function stopDraw() {
+    if (isDrawing) {
+        ctx.closePath();
+    }
     isDrawing = false;
 }
 
-// Restablecer el tamaño del lienzo de dibujo cuando cambie el tamaño de la ventana
-window.addEventListener("resize", () => {
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function saveImage() {
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = "drawing.png";
+    link.click();
+}
+
+const brushBtn = document.querySelector("#brush");
+const eraserBtn = document.querySelector("#eraser");
+const brushSizeSlider = document.querySelector("#bs-slider");
+const eraserSizeSlider = document.querySelector("#er-slider");
+const colorPicker = document.querySelector("#col");
+const clearButton = document.querySelector(".clear-canvas");
+const saveButton = document.querySelector(".save-image");
+
+brushBtn.addEventListener("click", () => {
+    selectedTool = "brush";
 });
 
-// Establecer el tamaño inicial del lienzo de dibujo
-const rect = canvas.getBoundingClientRect();
-canvas.width = rect.width;
-canvas.height = rect.height;
+eraserBtn.addEventListener("click", () => {
+    selectedTool = "eraser";
+});
+
+brushSizeSlider.addEventListener("input", () => {
+    brushWidth = brushSizeSlider.value;
+});
+
+eraserSizeSlider.addEventListener("input", () => {
+    eraserWidth = eraserSizeSlider.value;
+});
+
+colorPicker.addEventListener("input", () => {
+    selectedColor = colorPicker.value;
+});
+
+clearButton.addEventListener("click", () => {
+    clearCanvas();
+});
+
+saveButton.addEventListener("click", () => {
+    saveImage();
+});

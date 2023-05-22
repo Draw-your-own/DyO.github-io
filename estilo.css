@@ -29,6 +29,7 @@ body {
 }
 ul{
     list-style: none;
+    margin-bottom: 20px;
 }
 section {
     background:rgb(255, 255, 255);
@@ -71,12 +72,13 @@ padding-left: 10px;
     margin-top: 10px;
   }
 .buttons button {
-    width: 100%;
+    width: 70%;
    color: white;
     border: 1px;
     border-radius: 4px;
     padding: 11px 0;
-    margin-bottom: 10px;
+    margin-top: 10px
+    margin-bottom: 20px;
     outline: none;
     background:#e2d573;
     cursor:pointer;

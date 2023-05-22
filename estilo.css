@@ -27,6 +27,9 @@ body {
     padding:10px;
 
 }
+ul{
+    list-style: none;
+}
 section {
     background:rgb(255, 255, 255);
     border-radius: 7px;

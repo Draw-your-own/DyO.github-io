@@ -1,7 +1,6 @@
 const canvas = document.querySelector("canvas"),
 toolBtns = document.querySelectorAll(".tool"),
-sizeESlider = document.querySelector("#es-slider"),
-sizeBSlider = document.querySelector("#bs-slider"),
+sizeSlider = document.querySelector(".slider"),
 colorBtns = document.querySelectorAll(".colors"),
 colorPicker = document.querySelector("#col"),
 clearCanvas = document.querySelector(".clear-canvas"),

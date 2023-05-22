@@ -73,12 +73,12 @@ padding-left: 10px;
 .buttons button {
     width: 100%;
    color: white;
-    border: none;
+    border: 1px;
     border-radius: 4px;
     padding: 11px 0;
     margin-bottom: 10px;
     outline: none;
-    background:none;
+    background:#e2d573;
     cursor:pointer;
 }
 .buttons.save-image{

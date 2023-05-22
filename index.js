@@ -1,4 +1,4 @@
-const canvas = document.querySelector("canvas"),
+const canvas = document.querySelector("#drawing-board"),
 toolBtns = document.querySelectorAll(".tool"),
 sizeESlider = document.querySelector("#bs-slider"),
 sizeBSlider = document.querySelector("#es-slider"),

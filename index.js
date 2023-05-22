@@ -103,3 +103,53 @@ function adjustCanvasSize() {
 
 adjustCanvasSize();
 window.addEventListener("resize", adjustCanvasSize);
+// Resto del código JavaScript...
+
+const takePhotoButton = document.querySelector(".take-photo");
+
+takePhotoButton.addEventListener("click", () => {
+    capturePhoto();
+});
+
+function capturePhoto() {
+    const video = document.createElement("video");
+    
+    
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch((error) => {
+            console.log("Error al acceder a la cámara: ", error);
+        });
+    
+    
+    video.addEventListener("loadeddata", () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        
+        canvas.toBlob((blob) => {
+            
+            const imageUrl = URL.createObjectURL(blob);
+            
+            
+            const link = document.createElement("a");
+            link.href = imageUrl;
+            link.download = "photo.png";
+            link.click();
+            
+           
+            URL.revokeObjectURL(imageUrl);
+            
+            
+            video.pause();
+            video.srcObject = null;
+        });
+    });
+}

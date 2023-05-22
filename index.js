@@ -93,3 +93,13 @@ clearButton.addEventListener("click", () => {
 saveButton.addEventListener("click", () => {
     saveImage();
 });
+
+function adjustCanvasSize() {
+    const drawingBoard = document.querySelector(".drawing-board");
+    const canvas = document.querySelector("#drawing-board");
+    canvas.width = drawingBoard.clientWidth;
+    canvas.height = drawingBoard.clientHeight;
+}
+
+adjustCanvasSize();
+window.addEventListener("resize", adjustCanvasSize);

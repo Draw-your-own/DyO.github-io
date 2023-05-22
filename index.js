@@ -42,7 +42,7 @@ function draw(e) {
 
 function stopDraw() {
     if (isDrawing) {
-        ctx.closePath();
+        ctx.beginPath();
     }
     isDrawing = false;
 }

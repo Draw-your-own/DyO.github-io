@@ -6,6 +6,7 @@ let selectedTool = "brush";
 let brushWidth = 5;
 let eraserWidth = 5;
 let selectedColor = "#000";
+let capturedImage = null;
 
 document.addEventListener("mousedown", startDraw);
 document.addEventListener("mousemove", drawing);
@@ -103,7 +104,6 @@ function adjustCanvasSize() {
 
 adjustCanvasSize();
 window.addEventListener("resize", adjustCanvasSize);
-// Resto del código JavaScript...
 
 const takePhotoButton = document.querySelector(".take-photo");
 
@@ -113,8 +113,7 @@ takePhotoButton.addEventListener("click", () => {
 
 function capturePhoto() {
     const video = document.createElement("video");
-    
-    
+
     navigator.mediaDevices.getUserMedia({ video: true })
         .then((stream) => {
             video.srcObject = stream;
@@ -123,33 +122,33 @@ function capturePhoto() {
         .catch((error) => {
             console.log("Error al acceder a la cámara: ", error);
         });
-    
-    
+
     video.addEventListener("loadeddata", () => {
         const canvas = document.createElement("canvas");
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
-        
+
         const context = canvas.getContext("2d");
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
-        
-        canvas.toBlob((blob) => {
-            
-            const imageUrl = URL.createObjectURL(blob);
-            
-            
-            const link = document.createElement("a");
-            link.href = imageUrl;
-            link.download = "photo.png";
-            link.click();
-            
-           
-            URL.revokeObjectURL(imageUrl);
-            
-            
-            video.pause();
-            video.srcObject = null;
-        });
+
+        capturedImage = new Image();
+        capturedImage.src = canvas.toDataURL("image/png");
+
+        canvas.remove();
+        video.pause();
+        video.srcObject = null;
     });
 }
+
+function drawCapturedImage() {
+    if (capturedImage) {
+        ctx.drawImage(capturedImage, 0, 0, canvas.width, canvas.height);
+    }
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    drawCapturedImage();
+}
+
+animate();

@@ -152,3 +152,38 @@ function animate() {
 }
 
 animate();
+
+// Añade este código al final de tu archivo JavaScript existente
+
+const deepArtApiKey = 'fel0a5a6-bcd-410e-a138-c43f99b62ce5; // Reemplaza 'TU_API_KEY' con tu clave de API de DeepArt.io
+
+async function transformDrawingToCubism() {
+  const canvasDataUrl = canvas.toDataURL(); // Obtiene los datos de la imagen del canvas
+  const response = await fetch(`https://api.deepai.org/api/style-transfer`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Api-Key': deepArtApiKey,
+    },
+    body: new URLSearchParams({
+      content: canvasDataUrl,
+      style: 'cubism',
+    }).toString(),
+  });
+
+  const result = await response.json();
+  const transformedImageUrl = result.output_url;
+
+  const transformedImage = new Image();
+  transformedImage.src = transformedImageUrl;
+
+  transformedImage.onload = function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(transformedImage, 0, 0, canvas.width, canvas.height);
+  };
+}
+
+const finishDrawingButton = document.querySelector("#finish-drawing");
+finishDrawingButton.addEventListener("click", transformDrawingToCubism);
+
+

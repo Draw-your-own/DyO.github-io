@@ -7,6 +7,7 @@ let brushWidth = 5;
 let eraserWidth = 5;
 let selectedColor = "#000";
 let capturedImage = null;
+let drawingEnabled = true; // Nueva variable para habilitar/deshabilitar el dibujo
 
 document.addEventListener("mousedown", startDraw);
 document.addEventListener("mousemove", drawing);
@@ -14,6 +15,8 @@ document.addEventListener("mouseup", stopDraw);
 document.addEventListener("mouseout", stopDraw);
 
 function startDraw(e) {
+    if (!drawingEnabled) return;
+    
     if (e.target === canvas) {
         isDrawing = true;
         draw(e);
@@ -153,37 +156,46 @@ function animate() {
 
 animate();
 
-// Añade este código al final de tu archivo JavaScript existente
-
-const deepArtApiKey = 'fel0a5a6-bcd-410e-a138-c43f99b62ce5; // Reemplaza 'TU_API_KEY' con tu clave de API de DeepArt.io
-
+// Nueva función para transformar el dibujo en estilo cubista
 async function transformDrawingToCubism() {
-  const canvasDataUrl = canvas.toDataURL(); // Obtiene los datos de la imagen del canvas
-  const response = await fetch(`https://api.deepai.org/api/style-transfer`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Api-Key': deepArtApiKey,
-    },
-    body: new URLSearchParams({
-      content: canvasDataUrl,
-      style: 'cubism',
-    }).toString(),
-  });
+    drawingEnabled = false; // Deshabilitar el dibujo durante la transformación
+    
+    // Obtener la imagen actual del canvas
+    const drawingDataUrl = canvas.toDataURL("image/png");
+    
+    // Enviar la imagen al servicio de DeepAI para la transformación
+    const response = await fetch("https://api.deepai.org/api/stylegan2", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Api-Key": "TU_API_KEY_DEEPAI"
+        },
+        body: new URLSearchParams({
+            image: drawingDataUrl,
+            model: "cubism"
+        })
+    });
 
-  const result = await response.json();
-  const transformedImageUrl = result.output_url;
+    const result = await response.json();
 
-  const transformedImage = new Image();
-  transformedImage.src = transformedImageUrl;
+    if (result.output_url) {
+        const transformedImage = new Image();
+        transformedImage.src = result.output_url;
 
-  transformedImage.onload = function () {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(transformedImage, 0, 0, canvas.width, canvas.height);
-  };
+        transformedImage.onload = function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(transformedImage, 0, 0, canvas.width, canvas.height);
+            drawingEnabled = true; // Volver a habilitar el dibujo
+        };
+    } else {
+        console.log("Error al transformar el dibujo.");
+    }
 }
 
-const finishDrawingButton = document.querySelector("#finish-drawing");
-finishDrawingButton.addEventListener("click", transformDrawingToCubism);
+// Obtener referencia al botón de finalizar dibujo
+const finishDrawingButton = document.querySelector(".finish-drawing");
 
-
+// Escuchar el evento click en el botón de finalizar dibujo
+finishDrawingButton.addEventListener("click", () => {
+    transformDrawingToCubism();
+});

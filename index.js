@@ -168,7 +168,9 @@ async function transformDrawingToCubism() {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Api-Key": "TU_API_KEY_DEEPAI"
+            "Api-Key": "fel0a5a6-bcd-410e-a138-c43f99b62ce5
+
+"
         },
         body: new URLSearchParams({
             image: drawingDataUrl,

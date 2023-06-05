@@ -149,13 +149,13 @@ finishDrawingButton.addEventListener("click", () => {
 });
 
 function applyDeepAiStyle(imageData) {
-    const apiKey = "56aff76d-f3f1-42fb-83b2-108ab2399f8d"; // Reemplaza con tu propia clave de API
+    const apiKey = "fe10a5a6-bccd-410e-a138-c43f99b62ce5"; // Reemplaza con tu propia clave de API
 
     fetch("https://api.deepai.org/api/deepart-cubism", {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Api-Key": "56aff76d-f3f1-42fb-83b2-108ab2399f8d"
+            "Api-Key": "fe10a5a6-bccd-410e-a138-c43f99b62ce5"
         },
         body: `image=${encodeURIComponent(imageData)}`
     })

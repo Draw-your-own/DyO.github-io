@@ -6,7 +6,6 @@ let selectedTool = "brush";
 let brushWidth = 5;
 let eraserWidth = 5;
 let selectedColor = "#000";
-let capturedImage = null;
 
 document.addEventListener("mousedown", startDraw);
 document.addEventListener("mousemove", drawing);
@@ -131,29 +130,18 @@ function capturePhoto() {
         const context = canvas.getContext("2d");
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        capturedImage = new Image();
+        const capturedImage = new Image();
         capturedImage.src = canvas.toDataURL("image/png");
 
         canvas.remove();
         video.pause();
         video.srcObject = null;
+
+        ctx.drawImage(capturedImage, 0, 0, canvas.width, canvas.height);
     });
 }
 
-function drawCapturedImage() {
-    if (capturedImage) {
-        ctx.drawImage(capturedImage, 0, 0, canvas.width, canvas.height);
-    }
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    drawCapturedImage();
-}
-const apiKey = "fel0a5a6-bcd-410e-a138-c43f99b62ce5"; // Reemplaza con tu propia clave de API
-
 const finishDrawingButton = document.querySelector("#finish-drawing");
-const canvas = document.querySelector("#drawing-board");
 
 finishDrawingButton.addEventListener("click", () => {
     const canvasData = canvas.toDataURL("image/png");
@@ -161,6 +149,8 @@ finishDrawingButton.addEventListener("click", () => {
 });
 
 function applyDeepAiStyle(imageData) {
+    const apiKey = "fel0a5a6-bcd-410e-a138-c43f99b62ce5"; // Reemplaza con tu propia clave de API
+
     fetch("https://api.deepai.org/api/deepart-cubism", {
         method: "POST",
         headers: {

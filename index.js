@@ -155,7 +155,7 @@ function applyDeepAiStyle(imageData) {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Api-Key": "56aff76d-f3f1-42fb-83b2-108ab2399f8d";
+            "Api-Key": "56aff76d-f3f1-42fb-83b2-108ab2399f8d"
         },
         body: `image=${encodeURIComponent(imageData)}`
     })
